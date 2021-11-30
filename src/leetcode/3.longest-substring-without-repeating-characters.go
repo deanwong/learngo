@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// O(n)
 func lengthOfLongestSubstring(s string) int {
 	length := 0
 	end := -1

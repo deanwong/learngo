@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// O(n)
 func twosum(nums []int, target int) []int {
 	dict := make(map[int]int)
 	for i := 0; i < len(nums); i++ {

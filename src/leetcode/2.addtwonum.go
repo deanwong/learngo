@@ -7,6 +7,8 @@ type ListNode struct {
 	Next *ListNode
 }
 
+// O(max(m,n))
+// O(1)
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	var head *ListNode
 	var tail *ListNode

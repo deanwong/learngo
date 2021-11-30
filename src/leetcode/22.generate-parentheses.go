@@ -2,6 +2,8 @@ package main
 
 import "fmt"
 
+// 每个答案需要 O(n)O(n) 的时间复制到答案数组中
+// O(n)
 func generateParenthesis(n int) []string {
 	ans := make([]string, 0)
 	if n <= 0 {

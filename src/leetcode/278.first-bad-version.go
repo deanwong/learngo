@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// O(logn)
 func firstBadVersion(n int) int {
 	lo, hi, mid := 1, n, 1
 	for lo <= hi {

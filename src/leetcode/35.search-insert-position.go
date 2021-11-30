@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+// O(logn)
 func searchInsert(nums []int, target int) int {
 	lo, hi, mid := 0, len(nums), 0
 	for lo <= hi {

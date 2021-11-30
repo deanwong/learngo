@@ -14,6 +14,7 @@ type ListNode struct {
  *     Next *ListNode
  * }
  */
+// O(L)
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	dummy := &ListNode{0, head}
 	fast, slow := head, dummy

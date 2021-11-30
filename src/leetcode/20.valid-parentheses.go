@@ -14,7 +14,7 @@ func isValid(s string) bool {
 	for i := 0; i < n; i++ {
 		c := s[i]
 		if left, ok := pairs[c]; ok {
-			if len(stack)-1 < 0 || stack[len(stack)-1] != left {
+			if len(stack) < 1 || stack[len(stack)-1] != left {
 				return false
 			}
 			stack = stack[:len(stack)-1]
