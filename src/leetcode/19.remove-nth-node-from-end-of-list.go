@@ -15,7 +15,7 @@ type ListNode struct {
  * }
  */
 // O(L)
-func removeNthFromEnd(head *ListNode, n int) *ListNode {
+func removeNthFromEnd2(head *ListNode, n int) *ListNode {
 	dummy := &ListNode{0, head}
 	fast, slow := head, dummy
 	if head.Next == nil {
@@ -23,50 +23,41 @@ func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	}
 	for fast != nil {
 		fast = fast.Next
-		// last node
-		if fast == nil {
-			slow.Next = slow.Next.Next
-		}
 		n--
-		if n <= 0 {
+		if n < 0 {
 			slow = slow.Next
 		}
 	}
+	slow.Next = slow.Next.Next
 	return dummy.Next
 }
 
-func removeNthFromEnd2(head *ListNode, n int) *ListNode {
-	dummy := &ListNode{0, head}
-	first, second := head, dummy
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	dummy := &ListNode{Val: 0, Next: head}
+	fast, slow := head, dummy
 	for i := 0; i < n; i++ {
-		first = first.Next
+		fast = fast.Next
 	}
-	for ; first != nil; first = first.Next {
-		second = second.Next
+	for fast != nil {
+		fast = fast.Next
+		slow = slow.Next
 	}
-	second.Next = second.Next.Next
+	slow.Next = slow.Next.Next
 	return dummy.Next
 }
 
 func transfrom(num int) *ListNode {
-	var head *ListNode
-	var tail *ListNode
+	dummy := &ListNode{Val: 0}
 	n := num
 	if n == 0 {
 		return &ListNode{Val: 0}
 	}
 	for n > 0 {
-		if tail == nil {
-			tail = &ListNode{Val: n % 10}
-			head = tail
-		} else {
-			head = &ListNode{Val: n % 10}
-			head.Next = tail
-			tail = head
-		}
+		node := &ListNode{Val: n % 10, Next: dummy.Next}
+		dummy.Next = node
 		n = n / 10
 	}
-	return head
+	return dummy.Next
 }
 
 func (l *ListNode) String() string {
