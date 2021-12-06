@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 // O(n)
-func lengthOfLongestSubstring(s string) int {
+func lengthOfLongestSubstring2(s string) int {
 	length := 0
 	end := -1
 	dict := make(map[byte]int)
@@ -29,9 +29,29 @@ func lengthOfLongestSubstring(s string) int {
 	return length
 }
 
+func lengthOfLongestSubstring(s string) int {
+	ans := 0
+	dict := make(map[byte]int)
+	i := 0
+	for j := 0; j < len(s); j++ {
+		// move right pointer and add
+		dict[s[j]]++
+		for i <= j && dict[s[j]] > 1 {
+			// move left if find duplicate char
+			dict[s[i]]--
+			i++
+		}
+		temp := j - i + 1
+		if ans < temp {
+			ans = temp
+		}
+	}
+	return ans
+}
+
 func main() {
 	fmt.Println(lengthOfLongestSubstring("abcabcbb"))
-	fmt.Println(lengthOfLongestSubstring("bbbbb"))
+	fmt.Println(lengthOfLongestSubstring("bb"))
 	fmt.Println(lengthOfLongestSubstring("pwwkew"))
 	fmt.Println(lengthOfLongestSubstring(""))
 	fmt.Println(lengthOfLongestSubstring("dvdf"))
