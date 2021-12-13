@@ -10,7 +10,7 @@ func rotate(nums []int, k int) {
 	for i := 0; i < n; i++ {
 		ans[(i+k)%n] = nums[i]
 	}
-	copy(ans, nums)
+	copy(nums, ans)
 }
 
 func main() {
