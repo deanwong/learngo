@@ -16,6 +16,7 @@ func updateMatrix(mat [][]int) [][]int {
 			}
 		}
 	}
+	// fmt.Println(mat)
 	for len(queue) > 0 {
 		point := queue[0]
 		queue = queue[1:]
@@ -37,12 +38,11 @@ func updateMatrix(mat [][]int) [][]int {
 			queue = append(queue, []int{x, newY})
 		}
 	}
-
 	return mat
 }
 
 func main() {
-	fmt.Println(updateMatrix([][]int{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}}))
-	fmt.Println(updateMatrix([][]int{{0, 0, 0}, {0, 1, 0}, {1, 1, 1}}))
-	fmt.Println(updateMatrix([][]int{{0, 0, 0}, {0, 1, 1}, {1, 1, 0}}))
+	fmt.Println(updateMatrix([][]int{{0, 0, 0}, {0, 1, 0}, {0, 0, 0}})) // [[0 0 0] [0 1 0] [0 0 0]]
+	fmt.Println(updateMatrix([][]int{{0, 0, 0}, {0, 1, 0}, {1, 1, 1}})) // [[0 0 0] [0 1 0] [1 2 1]]
+	fmt.Println(updateMatrix([][]int{{0, 0, 0}, {0, 1, 1}, {1, 1, 0}})) // [[0 0 0] [0 1 1] [1 1 0]]
 }

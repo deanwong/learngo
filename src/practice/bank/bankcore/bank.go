@@ -5,6 +5,14 @@ import (
 	"fmt"
 )
 
+type Accountable interface {
+	Statement() string
+}
+
+// func Statement(a Accountable) string {
+// 	return a.Statement()
+// }
+
 type Customer struct {
 	Name    string
 	Address string
@@ -40,6 +48,12 @@ func (a *Account) Statement() string {
 	return fmt.Sprintf("%d - %s - %v", a.Number, a.Name, a.Balance)
 }
 
-func Hello() string {
-	return "Hey! I'm working!"
+func (a *Account) Transfer(amount float64, target *Account) error {
+	if err := a.Withdraw(amount); err != nil {
+		return err
+	}
+	if err := target.Deposit(amount); err != nil {
+		return err
+	}
+	return nil
 }

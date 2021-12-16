@@ -88,3 +88,40 @@ func TestStatement(t *testing.T) {
 		t.Error("statement doesn't have the proper format")
 	}
 }
+
+func TestTransfer(t *testing.T) {
+	account := Account{
+		Customer: Customer{
+			Name:    "John",
+			Address: "Los Angeles, California",
+			Phone:   "(213) 555 0147",
+		},
+		Number:  1001,
+		Balance: 100,
+	}
+
+	target := Account{
+		Customer: Customer{
+			Name:    "Tom",
+			Address: "NYC",
+			Phone:   "(010) 745 123",
+		},
+		Number:  1002,
+		Balance: 0,
+	}
+
+	// invalid
+	if err := account.Transfer(-10, &target); err == nil {
+		t.Error("amount should be greater than zero")
+	}
+
+	if err := account.Transfer(101, &target); err == nil {
+		t.Error("balance not enough")
+	}
+
+	account.Transfer(51, &target)
+	if account.Balance != 49 && target.Balance != 51 {
+		t.Error("transfer failed")
+	}
+
+}
