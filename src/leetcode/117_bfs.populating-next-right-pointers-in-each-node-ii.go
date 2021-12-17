@@ -11,6 +11,7 @@ type Node struct {
 	Next  *Node
 }
 
+// O(n)
 func connect(root *Node) *Node {
 	if root == nil {
 		return root
@@ -35,24 +36,11 @@ func connect(root *Node) *Node {
 	return root
 }
 
-func connect2(root *Node) *Node {
-	if root == nil {
-		return root
-	}
-	// loop from left in every layer
-	for left := root; left.Left != nil; left = left.Left {
-		for node := left; node != nil; node = node.Next {
-			node.Left.Next = node.Right
-			if node.Next != nil {
-				node.Right.Next = node.Next.Left
-			}
-		}
-	}
-	return root
-}
-
 func array2binarytree(array []int, idx int, node *Node) *Node {
 	if idx < len(array) {
+		if array[idx] == 0 {
+			return nil
+		}
 		node = &Node{Val: array[idx]}
 		node.Left = array2binarytree(array, 2*idx+1, node.Left)
 		node.Right = array2binarytree(array, 2*idx+2, node.Right)
@@ -79,7 +67,7 @@ func (n *Node) String() string {
 }
 
 func main() {
-	array := []int{1, 2, 3, 4, 5, 6, 7}
+	array := []int{1, 2, 3, 4, 5, 0, 7}
 	var root *Node
-	fmt.Print(connect2(array2binarytree(array, 0, root)))
+	fmt.Print(connect(array2binarytree(array, 0, root))) // [1,#,2,3,#,4,5,7,#]
 }
