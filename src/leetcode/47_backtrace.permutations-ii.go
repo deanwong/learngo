@@ -1,11 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 // O(n!*n) n!表示递归次数，n表示复制答案的次数
-func permute(nums []int) [][]int {
+func permuteUnique(nums []int) [][]int {
 	ans := make([][]int, 0)
 	n := len(nums)
+	sort.Ints(nums)
 	var backtrace func(candidates []int, left int, permutation []int)
 	backtrace = func(candidates []int, left int, permutation []int) {
 		if left == 0 {
@@ -18,7 +22,11 @@ func permute(nums []int) [][]int {
 			if candidates[i] == -99 {
 				continue
 			}
-			candidatesCopy := make([]int, len(nums))
+			// 去重
+			if i > 0 && candidates[i] == candidates[i-1] {
+				continue
+			}
+			candidatesCopy := make([]int, len(candidates))
 			copy(candidatesCopy, candidates)
 			permutation = append(permutation, candidatesCopy[i])
 			candidatesCopy[i] = -99
@@ -31,7 +39,6 @@ func permute(nums []int) [][]int {
 }
 
 func main() {
-	fmt.Println(permute([]int{1, 2, 3})) // [[1 2 3] [1 3 2] [2 1 3] [2 3 1] [3 1 2] [3 2 1]]
-	fmt.Println(permute([]int{0, 1}))    // [[0 1] [1 0]]
-	fmt.Println(permute([]int{1}))       // [[1]]
+	fmt.Println(permuteUnique([]int{1, 1, 2})) // [[1 1 2] [1 2 1] [2 1 1]]
+	fmt.Println(permuteUnique([]int{1, 2, 3})) // [[1 2 3] [1 3 2] [2 1 3] [2 3 1] [3 1 2] [3 2 1]]
 }

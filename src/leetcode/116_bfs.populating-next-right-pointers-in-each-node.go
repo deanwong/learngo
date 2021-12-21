@@ -11,6 +11,7 @@ type Node struct {
 	Next  *Node
 }
 
+// O(n)
 func connect(root *Node) *Node {
 	if root == nil {
 		return root

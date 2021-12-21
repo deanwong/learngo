@@ -2,35 +2,35 @@ package main
 
 import "fmt"
 
-// 每个答案需要 O(n)O(n) 的时间复制到答案数组中
+// 每个答案需要 O(n) 的时间复制到答案数组中
 // O(n)
 func generateParenthesis(n int) []string {
 	ans := make([]string, 0)
 	if n <= 0 {
 		return ans
 	}
-	dfs(&ans, "", 0, 0, n)
+	var backtrace func(left int, right int, temp string)
+	backtrace = func(left int, right int, temp string) {
+		if len(temp) == 2*n {
+			ans = append(ans, temp)
+			return
+		}
+		if left < n {
+			temp = temp + "("
+			backtrace(left+1, right, temp)
+			temp = temp[:len(temp)-1]
+		}
+		if right < left {
+			temp = temp + ")"
+			backtrace(left, right+1, temp)
+			temp = temp[:len(temp)-1]
+		}
+	}
+	backtrace(0, 0, "")
 	return ans
 }
 
-func dfs(ans *[]string, str string, left int, right int, n int) {
-	if len(str) == n*2 {
-		*ans = append(*ans, str)
-		return
-	}
-	if left < n {
-		str += "("
-		dfs(ans, str, left+1, right, n)
-		str = str[:len(str)-1]
-	}
-	if right < left {
-		str += ")"
-		dfs(ans, str, left, right+1, n)
-		str = str[:len(str)-1]
-	}
-}
-
 func main() {
-
-	fmt.Println(generateParenthesis(0))
+	fmt.Println(generateParenthesis(3)) // [((())) (()()) (())() ()(()) ()()()]
+	fmt.Println(generateParenthesis(1)) // [()]
 }
