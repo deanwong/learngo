@@ -4,27 +4,29 @@ import "fmt"
 
 // O(n * 2^n) 其中 n 为图中点的数量
 func allPathsSourceTarget(graph [][]int) [][]int {
-	n := len(graph)
 	ans := make([][]int, 0)
+	n := len(graph)
 	if n <= 0 {
 		return ans
 	}
-	dfs(&ans, graph, n, 0, []int{0})
+	var backtrace func(from int, path []int)
+	backtrace = func(from int, path []int) {
+		if from == n-1 {
+			pathCopy := make([]int, len(path))
+			copy(pathCopy, path)
+			ans = append(ans, pathCopy)
+			return
+		}
+		// 城市的数量
+		for i := 0; i < len(graph[from]); i++ {
+			to := graph[from][i]
+			path = append(path, to)
+			backtrace(to, path)
+			path = path[:len(path)-1]
+		}
+	}
+	backtrace(0, []int{0})
 	return ans
-}
-
-func dfs(ans *[][]int, graph [][]int, n int, from int, path []int) {
-	if from == n-1 {
-		val := make([]int, len(path))
-		copy(val, path)
-		*ans = append(*ans, val)
-		return
-	}
-	for i := 0; i < len(graph[from]); i++ {
-		path = append(path, graph[from][i])
-		dfs(ans, graph, n, graph[from][i], path)
-		path = path[:len(path)-1]
-	}
 }
 
 func main() {

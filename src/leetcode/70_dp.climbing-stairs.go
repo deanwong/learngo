@@ -59,5 +59,5 @@ func dfs(ans *int, n int, distance int) {
 
 func main() {
 	fmt.Println(climbStairs(2))
-	fmt.Println(climbStairs(3))
+	fmt.Println(climbStairs(5))
 }

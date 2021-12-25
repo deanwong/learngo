@@ -55,7 +55,7 @@ func min(a, b int) int {
 }
 
 func main() {
-	fmt.Println(minimumTotal_fromtop([][]int{{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}}))
-	fmt.Println(minimumTotal_fromtop([][]int{{-10}}))
-	fmt.Println(minimumTotal_fromtop([][]int{{-1}, {2, 3}, {1, -1, -3}}))
+	fmt.Println(minimumTotal_fromtop([][]int{{2}, {3, 4}, {6, 5, 7}, {4, 1, 8, 3}})) // 11
+	fmt.Println(minimumTotal_fromtop([][]int{{-10}}))                                // -10
+	fmt.Println(minimumTotal_fromtop([][]int{{-1}, {2, 3}, {1, -1, -3}}))            // -1
 }
