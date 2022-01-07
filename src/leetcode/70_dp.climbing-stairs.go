@@ -7,14 +7,17 @@ func climbStairs(n int) int {
 	if n <= 2 {
 		return n
 	}
-	dp := make([]int, n)
-	dp[0] = 1
-	dp[1] = 2
-	for i := 2; i < n; i++ {
-		// f(n) = f(n-2) + f(n-1)
+	// definition: dp[i] 表示爬 i 级台阶的走法
+	// formulation : dp[i] = dp[i-1] + dp[i-1] 爬 i 级台阶取可以上一步只走 1 级 dp[i-1] 也可以 走 2 级 dp[i-2]
+	// initial: dp[0] = 0, dp[1] = 1, dp[2] = 2 (这里与斐波那契不同,斐波那契f(2)=1)
+	// answer: dp[n]
+	dp := make([]int, n+1)
+	dp[1] = 1
+	dp[2] = 2
+	for i := 3; i <= n; i++ {
 		dp[i] = dp[i-1] + dp[i-2]
 	}
-	return dp[n-1]
+	return dp[n]
 }
 
 func climbStairs_plus(n int) int {
@@ -23,41 +26,16 @@ func climbStairs_plus(n int) int {
 	}
 	a := 1
 	b := 2
-	for i := 2; i < n; i++ {
-		temp := b
-		b = a + b
-		a = temp
+	sum := 0
+	for i := 3; i <= n; i++ {
+		sum = a + b
+		a = b
+		b = sum
 	}
-	return b
-}
-
-func climbStairs2(n int) int {
-	if n == 1 {
-		return 1
-	}
-	ans := 0
-	dfs(&ans, n, 0)
-	return ans
-}
-
-func dfs(ans *int, n int, distance int) {
-	if distance > n {
-		return
-	}
-	if distance == n {
-		*ans++
-		return
-	}
-	for step := 1; step <= 2; step++ {
-		distance += step
-		// fmt.Println(distance)
-		dfs(ans, n, distance)
-		distance -= step
-		// fmt.Println(distance)
-	}
+	return sum
 }
 
 func main() {
-	fmt.Println(climbStairs(2))
-	fmt.Println(climbStairs(5))
+	fmt.Println(climbStairs_plus(2)) // 2
+	fmt.Println(climbStairs_plus(5)) // 8
 }

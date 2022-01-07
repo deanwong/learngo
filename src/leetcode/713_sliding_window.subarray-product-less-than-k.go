@@ -31,5 +31,5 @@ func numSubarrayProductLessThanK(nums []int, k int) int {
 func main() {
 	fmt.Println(numSubarrayProductLessThanK([]int{10, 5, 2, 6}, 100)) // 8
 	fmt.Println(numSubarrayProductLessThanK([]int{1, 2, 3}, 0))       // 0
-	fmt.Println(numSubarrayProductLessThanK([]int{1, 1, 1}, 2))       //6
+	fmt.Println(numSubarrayProductLessThanK([]int{1, 1, 1}, 2))       // 6
 }
