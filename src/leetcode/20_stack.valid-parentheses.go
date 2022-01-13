@@ -1,31 +1,33 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func isValid(s string) bool {
+	pairs := map[byte]byte{')': '(', '}': '{', ']': '['}
 	n := len(s)
-	if n%2 == 1 {
+	if n%2 != 0 {
 		return false
 	}
-
-	pairs := map[byte]byte{')': '(', '}': '{', ']': '['}
-
-	var stack []byte
+	stack := make([]byte, 0)
 	for i := 0; i < n; i++ {
-		c := s[i]
-		if left, ok := pairs[c]; ok {
-			if len(stack) < 1 || stack[len(stack)-1] != left {
+		ch := s[i]
+		if left, ok := pairs[ch]; ok {
+			if len(stack) == 0 || stack[len(stack)-1] != left {
 				return false
+			} else {
+				stack = stack[:len(stack)-1]
 			}
-			stack = stack[:len(stack)-1]
 		} else {
-			// left part
-			stack = append(stack, c)
+			stack = append(stack, ch)
 		}
 	}
 	return len(stack) == 0
 }
 
 func main() {
-	fmt.Println(isValid("})"))
+	fmt.Println(isValid("()"))     // true
+	fmt.Println(isValid("()[]{}")) // false
+	fmt.Println(isValid("(]"))     // false
 }

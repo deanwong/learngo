@@ -25,20 +25,22 @@ func coinChange(coins []int, amount int) int {
 		dp[i] = math.MaxInt64
 	}
 	dp[0] = 0
-	// for i := 1; i <= amount; i++ {
-	// 	for j := 0; j < n; j++ {
-	// 		// 硬币面值小于等于背包总额并且扣掉硬币面值的前导dp已经计算过
-	// 		if coins[j] <= i && dp[i-coins[j]] != math.MaxInt64 {
-	// 			dp[i] = min(dp[i], dp[i-coins[j]]+1)
-	// 		}
-	// 	}
-	// }
+	/*
+		for i := 1; i <= amount; i++ {
+			for j := 0; j < n; j++ {
+				// 硬币面值小于等于背包总额并且扣掉硬币面值的前导dp已经计算过
+				if coins[j] <= i && dp[i-coins[j]] != math.MaxInt64 {
+					dp[i] = min(dp[i], dp[i-coins[j]]+1)
+				}
+			}
+		}
+	*/
 	// 物品栏
-	for i := 0; i < n; i++ {
+	for j := 0; j < n; j++ {
 		// 背包
-		for j := coins[i]; j <= amount; j++ {
-			if dp[j-coins[i]] != math.MaxInt64 {
-				dp[j] = min(dp[j], dp[j-coins[i]]+1)
+		for i := coins[j]; i <= amount; i++ {
+			if dp[i-coins[j]] != math.MaxInt64 {
+				dp[i] = min(dp[i], dp[i-coins[j]]+1)
 			}
 		}
 	}

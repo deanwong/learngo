@@ -30,19 +30,20 @@ func lengthOfLongestSubstring2(s string) int {
 }
 
 func lengthOfLongestSubstring(s string) int {
-	ans := 0
-	dict := make(map[byte]int)
+	n := len(s)
 	i := 0
-	for j := 0; j < len(s); j++ {
-		// move right pointer and add
-		dict[s[j]]++
-		for i <= j && dict[s[j]] > 1 {
+	lookup := make(map[byte]int)
+	ans := 0
+	// move right pointer and add
+	for j := 0; j < n; j++ {
+		lookup[s[j]]++
+		for i <= j && lookup[s[j]] > 1 {
 			// move left if find duplicate char
-			dict[s[i]]--
+			lookup[s[i]]--
 			i++
 		}
 		temp := j - i + 1
-		if ans < temp {
+		if temp > ans {
 			ans = temp
 		}
 	}
@@ -50,9 +51,9 @@ func lengthOfLongestSubstring(s string) int {
 }
 
 func main() {
-	fmt.Println(lengthOfLongestSubstring("abcabcbb"))
-	fmt.Println(lengthOfLongestSubstring("bb"))
-	fmt.Println(lengthOfLongestSubstring("pwwkew"))
-	fmt.Println(lengthOfLongestSubstring(""))
-	fmt.Println(lengthOfLongestSubstring("dvdf"))
+	fmt.Println(lengthOfLongestSubstring("abcabcbb")) // 3
+	fmt.Println(lengthOfLongestSubstring("bb"))       // 1
+	fmt.Println(lengthOfLongestSubstring("pwwkew"))   // 3
+	fmt.Println(lengthOfLongestSubstring(""))         // 0
+	fmt.Println(lengthOfLongestSubstring("dvdf"))     // 3
 }
