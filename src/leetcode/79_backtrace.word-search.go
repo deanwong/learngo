@@ -2,17 +2,16 @@ package main
 
 import "fmt"
 
-var directions = [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
-
 // 一个非常宽松的上界为 O(M * N * 3^L) 其中 M, N 为网格的长度与宽度，L 为字符串的长度。在每次调用函数 backtrace 时，除了第一次可以进入 4 个分支以外，其余时间我们最多会进入 3 个分支（因为每个位置只能使用一次，所以走过来的分支没法走回去）
 func exist(board [][]byte, word string) bool {
+	directions := [][]int{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
 	m, n := len(board), len(board[0])
 	visited := make([][]bool, m)
 	for i := 0; i < m; i++ {
 		visited[i] = make([]bool, n)
 	}
 	var backtrace func(x int, y int, idx int) bool
-	backtrace = func(x int, y int, idx int) bool {
+	backtrace = func(x, y, idx int) bool {
 		if board[x][y] != word[idx] {
 			return false
 		}
@@ -20,8 +19,9 @@ func exist(board [][]byte, word string) bool {
 			return true
 		}
 		visited[x][y] = true
+		fmt.Printf("before  %v y %v visited %v\n", x, y, visited)
 		for i := 0; i < 4; i++ {
-			newX, newY := x+directions[i][0], y+directions[i][1]
+			newX, newY := directions[i][0]+x, directions[i][1]+y
 			if newX >= 0 && newX < m && newY >= 0 && newY < n && !visited[newX][newY] {
 				if backtrace(newX, newY, idx+1) {
 					return true
@@ -29,6 +29,7 @@ func exist(board [][]byte, word string) bool {
 			}
 		}
 		visited[x][y] = false
+		fmt.Printf("after x %v y %v visited %v\n", x, y, visited)
 		return false
 	}
 	for i := 0; i < m; i++ {
