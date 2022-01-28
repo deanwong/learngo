@@ -30,8 +30,8 @@ func checkInclusion(s1 string, s2 string) bool {
 }
 
 func main() {
-	fmt.Println(checkInclusion("ab", "eidbaooo"))
-	fmt.Println(checkInclusion("ab", "eidboaoo"))
-	fmt.Println(checkInclusion("hello", "ooolleoooleh"))
-	fmt.Println(checkInclusion("adc", "dcda"))
+	fmt.Println(checkInclusion("ab", "eidbaooo"))        // true
+	fmt.Println(checkInclusion("ab", "eidboaoo"))        // false
+	fmt.Println(checkInclusion("hello", "ooolleoooleh")) // false
+	fmt.Println(checkInclusion("adc", "dcda"))           // true
 }

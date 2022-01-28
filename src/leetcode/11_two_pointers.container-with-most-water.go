@@ -16,15 +16,16 @@ func maxArea(height []int) int {
 		}
 		return a
 	}
-	left, right := 0, len(height)-1
+	n := len(height)
+	l, r := 0, n-1
 	ans := 0
-	for left < right {
-		distance := right - left
-		ans = max(ans, distance*min(height[left], height[right]))
-		if height[left] > height[right] {
-			right--
+	for l < r {
+		area := (r - l) * min(height[l], height[r])
+		ans = max(ans, area)
+		if height[l] > height[r] {
+			r--
 		} else {
-			left++
+			l++
 		}
 	}
 	return ans
