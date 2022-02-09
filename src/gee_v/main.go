@@ -91,5 +91,4 @@ func main() {
 	parts = parsePattern(pattern)
 	a.search(parts, 0)
 
-	
 }
