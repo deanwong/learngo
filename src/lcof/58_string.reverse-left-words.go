@@ -8,6 +8,7 @@ func reverseLeftWords(s string, n int) string {
 	// rolling array
 	for i := 0; i < len; i++ {
 		// 转换为向右偏移 i+len-n
+		// 如果是向右偏移 i+n
 		ans[(i+len-n)%len] = s[i]
 	}
 	return string(ans)

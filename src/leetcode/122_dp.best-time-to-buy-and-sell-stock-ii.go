@@ -13,11 +13,11 @@ func maxProfit(prices []int) int {
 		}
 		return b
 	}
-	// definition: dp[i][0] 表示第 i 天没有股票； dp[i][1] 表示第 i 天持有股票
+	// definition: dp[i][0] 表示第 i 天（实际是i-1天）没有股票； dp[i][1] 表示第 i 天持有股票
 	// formulation : 分开讨论
 	// dp[i][0] 可以是前一天也没有股票 dp[i-1][0] 或是前一天持有股票但是第 i 天卖出 dp[i-1][1] + prices[i]，取两者较大的值
 	// dp[i][1] 可以是前一天也持有股票 dp[i-1][1] 或是前一天没有股票但是第 i 天买入 dp[i-1][0] - prices[i]，取两者较大的值
-	// initial: dp[0] = 第一天的股价
+	// initial: dp[0][0] 第1天没有股票也没有股价，dp[0][1] 第1天有股票，即预先买了第1天的股票
 	// answer: dp[n-1][0] 最后一天没有股票即maxProfit
 	dp := make([][2]int, n)
 	dp[0][0] = 0
