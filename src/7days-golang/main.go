@@ -21,8 +21,13 @@ func onlyForV2() gee.HandlerFunc {
 func main() {
 	r := gee.New()
 	r.Use(gee.Logger()) // global midlleware
+	r.Use(gee.Recovery())
 	r.GET("/", func(c *gee.Context) {
 		c.HTML(http.StatusOK, "<h1>Hello Gee</h1>")
+	})
+	r.GET("/panic", func(c *gee.Context) {
+		names := []string{"geektutu"}
+		c.String(http.StatusOK, names[100])
 	})
 
 	v2 := r.Group("/v2")
