@@ -12,7 +12,7 @@ func onlyForV2() gee.HandlerFunc {
 		// Start timer
 		t := time.Now()
 		// if a server error occurred
-		c.Fail(500, "Internal Server Error")
+		//c.Fail(500, "Internal Server Error")
 		// Calculate resolution time
 		log.Printf("[%d] %s in %v for group v2", c.StatusCode, c.Req.RequestURI, time.Since(t))
 	}
@@ -20,14 +20,17 @@ func onlyForV2() gee.HandlerFunc {
 
 func main() {
 	r := gee.New()
-	r.Use(gee.Logger()) // global midlleware
-	r.Use(gee.Recovery())
+	r.Use(gee.Logger(), gee.Recovery()) // global midlleware
 	r.GET("/", func(c *gee.Context) {
 		c.HTML(http.StatusOK, "<h1>Hello Gee</h1>")
 	})
 	r.GET("/panic", func(c *gee.Context) {
 		names := []string{"geektutu"}
 		c.String(http.StatusOK, names[100])
+	})
+
+	r.GET("/assets/*filepath", func(c *gee.Context) {
+		c.JSON(http.StatusOK, gee.H{"filepath": c.Param("filepath")})
 	})
 
 	v2 := r.Group("/v2")
