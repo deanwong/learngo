@@ -18,6 +18,6 @@ func add(a int, b int) int {
 }
 
 func main() {
-	// fmt.Println(add(1, 1))   // 2
+	fmt.Println(add(1, 1))   // 2
 	fmt.Println(add(20, 17)) // 2
 }

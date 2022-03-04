@@ -31,15 +31,11 @@ func (this *Solution) Reset() []int {
 
 func (this *Solution) Shuffle() []int {
 	n := len(this.nums)
-	swap := func(i int, j int) {
-		temp := this.nums[i]
-		this.nums[i] = this.nums[j]
-		this.nums[j] = temp
-	}
 	for i := n - 1; i > 0; i-- {
 		// 从后往 [0: i] 替换，注意必须包含i
 		// i=n-1时，有n种选择[0:n-1]，i=n-2时，有n-1中选择[0:n-2]
-		swap(i, rand.Intn(i+1))
+		j := rand.Intn(i + 1)
+		this.nums[i], this.nums[j] = this.nums[j], this.nums[i]
 	}
 	// 也可以从前往后 i=0时，有n种选择[0:n-1]，i=1时，有n-1中选择[1:n-1]
 	// for i := 0; i < n; i++ {
