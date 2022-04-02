@@ -4,54 +4,59 @@ import (
 	"fmt"
 )
 
-type Tire struct {
+type TireNode struct {
 	end      bool
-	word     string
-	children [26]*Tire
+	children [26]*TireNode
 }
 
-func (t *Tire) Insert(word string) {
+func (this *TireNode) Insert(word string) {
+	node := this
 	for _, c := range word {
-		if t.children[c-'a'] == nil {
-			t.children[c-'a'] = &Tire{}
+		if node.children[c-'a'] == nil {
+			node.children[c-'a'] = &TireNode{}
 		}
-		fmt.Printf("word %v, ch %v, node %v\n", word, string(c), t)
-		t = t.children[c-'a']
+		node = node.children[c-'a']
 	}
-	t.word = word
-	t.end = true
+	node.end = true
 }
 
-// O(n)
+func (this *TireNode) Search(word string) bool {
+	node := this
+	for _, c := range word {
+		if node.children[c-'a'] == nil {
+			return false
+		}
+		node = node.children[c-'a']
+		if !node.end {
+			return false
+		}
+	}
+	return true
+}
+
 func longestWord(words []string) string {
-	maxDepth := 0
+	root := &TireNode{}
+	for _, word := range words {
+		root.Insert(word)
+	}
 	ans := ""
-	var dfs func(root *Tire, depth int)
-	dfs = func(root *Tire, depth int) {
-		if depth > 0 && !root.end {
-			return
+	for _, word := range words {
+		n := len(word)
+		max := len(ans)
+		if n < max {
+			continue
 		}
-		// 保留第一个最大长度的
-		if depth > maxDepth {
-			ans = root.word
-			maxDepth = depth
+		if n == max && word > ans {
+			continue
 		}
-		for i := 0; i < len(root.children); i++ {
-			if root.children[i] != nil {
-				fmt.Println(i)
-				dfs(root.children[i], depth+1)
-			}
+		if root.Search(word) {
+			ans = word
 		}
 	}
-	root := &Tire{}
-	for _, w := range words {
-		root.Insert(w)
-	}
-	dfs(root, 0)
 	return ans
 }
 
 func main() {
-	fmt.Println(longestWord([]string{"w", "wo", "wor", "worl", "world"}))                    // world
+	// fmt.Println(longestWord([]string{"w", "wo", "wor", "worl", "world"}))                    // world
 	fmt.Println(longestWord([]string{"a", "banana", "app", "appl", "ap", "apply", "apple"})) // apple
 }

@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // O(n)
 func lengthOfLongestSubstring2(s string) int {
@@ -33,21 +35,19 @@ func lengthOfLongestSubstring(s string) int {
 	n := len(s)
 	i := 0
 	lookup := make(map[byte]int)
-	ans := 0
-	// move right pointer and add
+	max := 0
 	for j := 0; j < n; j++ {
 		lookup[s[j]]++
 		for i <= j && lookup[s[j]] > 1 {
-			// move left if find duplicate char
 			lookup[s[i]]--
 			i++
 		}
 		temp := j - i + 1
-		if temp > ans {
-			ans = temp
+		if temp > max {
+			max = temp
 		}
 	}
-	return ans
+	return max
 }
 
 func main() {

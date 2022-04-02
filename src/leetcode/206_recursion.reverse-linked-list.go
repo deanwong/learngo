@@ -23,10 +23,10 @@ func reverseList(head *ListNode) *ListNode {
 	if head.Next == nil {
 		return head
 	}
-	temp := reverseList(head.Next)
+	node := reverseList(head.Next)
 	head.Next.Next = head
 	head.Next = nil
-	return temp
+	return node
 }
 
 func reverseList2(head *ListNode) *ListNode {
@@ -36,8 +36,8 @@ func reverseList2(head *ListNode) *ListNode {
 	if head.Next == nil {
 		return head
 	}
-	cur := head
 	var pre *ListNode
+	cur := head
 	for cur != nil {
 		next := cur.Next
 		cur.Next = pre
