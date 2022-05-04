@@ -9,35 +9,33 @@ func threeSum(nums []int) [][]int {
 	n := len(nums)
 	sort.Ints(nums)
 	ans := make([][]int, 0)
-	twosum := func(left int, right int, target int, value int) [][]int {
-		res := make([][]int, 0)
-		for left < right {
-			sum := nums[left] + nums[right]
+	twoSum := func(l int, r int, target int, value int) [][]int {
+		var res = make([][]int, 0)
+		for l < r {
+			sum := nums[l] + nums[r]
 			if sum == target {
-				res = append(res, []int{value, nums[left], nums[right]})
-				for left < right && nums[left] == nums[left+1] {
-					left++
+				res = append(res, []int{nums[l], nums[r], value})
+				for l < r && nums[l] == nums[l+1] {
+					l++
 				}
-				left++
-				for left < right && nums[right] == nums[right-1] {
-					right--
+				l++
+				for l < r && nums[r] == nums[r-1] {
+					r--
 				}
-				right--
+				r--
 			} else if sum < target {
-				left++
+				l++
 			} else {
-				right--
+				r--
 			}
-			// fmt.Printf("left %v, right %v, target %v\n", nums[left], nums[right], target)
 		}
 		return res
 	}
-
 	for i := 0; i < n; i++ {
-		if i > 0 && nums[i] == nums[i-1] {
+		if i > 0 && nums[i-1] == nums[i] {
 			continue
 		}
-		ans = append(ans, twosum(i+1, n-1, -nums[i], nums[i])...)
+		ans = append(ans, twoSum(i+1, n-1, -nums[i], nums[i])...)
 	}
 	return ans
 }
